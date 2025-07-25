@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <!-- Your HTML here -->
+    <header class="header">
+      <div class="container">
+        <img
+          src="assets/parrot.png"
+          alt="A brightly coloured cartoon parrot surrounded by stars"
+        />
+        <div class="main-title">
+          <h1>PollyGlot</h1>
+          <h2>Perfect Translation Every Time</h2>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="text-to-translate-section">
+        <label for="text-to-translate">Text to translate 👇</label>
+        <textarea name="text-to-translate" id="text-to-translate"></textarea>
+      </section>
+      <section class="language-options">
+        <fieldset class="language-selection">
+          <legend>Select language 👇</legend>
+          <div>
+            <input
+              type="radio"
+              id="french"
+              name="french"
+              value="french"
+              checked
+            />
+            <label for="french"
+              >French <img class="flag" src="assets/fr-flag.png"
+            /></label>
+            <input type="radio" id="spanish" name="spanish" value="spanish" />
+            <label for="spanish"
+              >Spanish <img class="flag" src="assets/sp-flag.png"
+            /></label>
+            <input
+              type="radio"
+              id="japanese"
+              name="japanese"
+              value="japanese"
+            />
+            <label for="japanese"
+              >Japanese <img class="flag" src="assets/jpn-flag.png"
+            /></label>
+          </div>
+        </fieldset>
+      </section>
+      <section><button>Translate</button></section>
+    </main>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
