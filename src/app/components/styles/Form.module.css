@@ -1,0 +1,67 @@
+/* Form.module.css */
+.card {
+  max-width: 360px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 4px solid #2c3e50;
+  border-radius: 16px;
+}
+.label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600; /* Poppins semi‑bold */
+  color: #005ea5;
+}
+.textarea {
+  width: 100%;
+  height: 120px;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: #f1f3f5;
+  font-size: 1rem;
+  resize: vertical;
+}
+.radios {
+  margin: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.radioLabel {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+.radioLabel input {
+  margin-right: 0.5rem;
+}
+.flag {
+  width: 24px;
+  height: auto;
+  margin-left: 0.5rem;
+}
+
+/* .translator {
+  display: flex;
+  flex-direction: column;
+  border: 4 solid #252f42;
+  border-radius: 15px;
+  width: 100%;
+  padding: 20px;
+}
+
+.textToTranslateSection {
+  width: 25rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flag {
+  display: inline;
+  height: 0.8rem;
+  border: 1px solid #999999;
+} */

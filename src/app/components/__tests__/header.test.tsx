@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Header from "../header";
+import Header from "../Header";
 
 describe("Header component", () => {
   it("renders the header element", () => {
@@ -33,11 +33,39 @@ describe("Header component", () => {
     expect(subtitle).toBeInTheDocument();
   });
 
-  it("applies the correct class names", () => {
+  it("renders header with correct styling", () => {
     render(<Header />);
     const headerElement = screen.getByRole("banner");
     expect(headerElement).toHaveClass("header");
-    const containerElement = screen.getByText("PollyGlot").closest("div");
-    expect(containerElement).toHaveClass("mainTitle");
+  });
+
+  it("renders the logo image with correct styling", () => {
+    render(<Header />);
+    const logo = screen.getByAltText(
+      "A brightly coloured cartoon parrot surrounded by stars"
+    );
+    expect(logo).toHaveClass("logo");
+  });
+
+  it("renders the title with correct styling", () => {
+    render(<Header />);
+    const title = screen.getByRole("heading", { level: 1 });
+    expect(title).toHaveClass("title");
+  });
+
+  it("renders the subtitle with correct styling", () => {
+    render(<Header />);
+    const subtitle = screen.getByRole("heading", { level: 2 });
+    expect(subtitle).toBeInTheDocument();
+    // Note: The subtitle is actually a <p> element, not an h2
+    const subtitleElement = screen.getByText("Perfect Translation Every Time");
+    expect(subtitleElement).toHaveClass("subtitle");
+  });
+
+  it("has proper semantic structure", () => {
+    render(<Header />);
+    const header = screen.getByRole("banner");
+    expect(header).toBeInTheDocument();
+    expect(header.tagName).toBe("HEADER");
   });
 });
