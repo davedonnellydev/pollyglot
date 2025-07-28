@@ -11,8 +11,10 @@ The application design was inspired by the [Figma design template](https://www.f
 ## ✨ Features
 
 - **Multi-language Translation**: Translate text between English and French, Spanish, or Japanese
-- **AI-Powered**: Uses OpenAI's GPT-4 model for accurate translations
+- **AI-Powered**: Uses OpenAI's GPT-4.1 model for accurate translations
 - **Content Moderation**: Built-in content filtering to ensure appropriate translations
+- **Rate Limiting**: Server-side rate limiting to prevent API abuse and ensure fair usage
+- **Input Validation**: Comprehensive validation for translation requests with proper error handling
 - **Modern UI**: Clean, responsive design with smooth transitions
 - **Real-time Feedback**: Loading states and error handling for better user experience
 - **Type Safety**: Built with TypeScript for enhanced development experience
@@ -84,20 +86,24 @@ The application design was inspired by the [Figma design template](https://www.f
 ```
 pollyglot/
 ├── src/
-│   └── app/
-│       ├── api/
-│       │   └── translate/
-│       │       └── route.ts          # Translation API endpoint
-│       ├── components/
-│       │   ├── __tests__/            # Component tests
-│       │   ├── styles/               # CSS modules
-│       │   ├── Header.tsx            # Application header
-│       │   ├── TranslateForm.tsx     # Translation form
-│       │   ├── ResultsView.tsx       # Results display
-│       │   └── Button.tsx            # Reusable button component
-│       ├── globals.css               # Global styles
-│       ├── layout.tsx                # Root layout
-│       └── page.tsx                  # Main application page
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── translate/
+│   │   │       └── route.ts          # Translation API endpoint
+│   │   ├── components/
+│   │   │   ├── __tests__/            # Component tests
+│   │   │   ├── styles/               # CSS modules
+│   │   │   ├── Header.tsx            # Application header
+│   │   │   ├── TranslateForm.tsx     # Translation form
+│   │   │   ├── ResultsView.tsx       # Results display
+│   │   │   └── Button.tsx            # Reusable button component
+│   │   ├── globals.css               # Global styles
+│   │   ├── layout.tsx                # Root layout
+│   │   └── page.tsx                  # Main application page
+│   └── utils/
+│       ├── rateLimiter.ts            # Rate limiting utilities
+│       ├── serverRateLimiter.ts      # Server-side rate limiting
+│       └── validation.ts             # Input validation utilities
 ├── public/
 │   └── flags/                        # Language flag images
 ├── API_SETUP.md                      # API configuration guide
@@ -132,6 +138,8 @@ The application uses OpenAI's API for translations. See [API_SETUP.md](./API_SET
 ### Key Features of the API Implementation:
 
 - **Content Moderation**: All text is checked for inappropriate content before translation
+- **Rate Limiting**: Server-side rate limiting prevents API abuse and ensures fair usage
+- **Input Validation**: Comprehensive validation for translation requests with proper error handling
 - **Error Handling**: Comprehensive error handling for API failures
 - **Security**: API keys are kept secure on the server side
 - **Flexibility**: Easy to switch between different translation services
@@ -166,4 +174,4 @@ This project is created for educational purposes as part of the Scrimba "Intro t
 
 ---
 
-**Note**: This project is for educational purposes. For production use, consider implementing additional security measures and rate limiting.
+**Note**: This project is for educational purposes. For production use, consider implementing additional security measures beyond the current rate limiting and validation features.
