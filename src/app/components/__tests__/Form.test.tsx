@@ -39,9 +39,9 @@ describe("TranslateForm component", () => {
 
   it("renders all language options with flags", () => {
     render(<TranslateForm {...mockProps} />);
-    expect(screen.getByLabelText("French flag")).toBeInTheDocument();
-    expect(screen.getByLabelText("Spanish flag")).toBeInTheDocument();
-    expect(screen.getByLabelText("Japanese flag")).toBeInTheDocument();
+    expect(screen.getByLabelText("French")).toBeInTheDocument();
+    expect(screen.getByLabelText("Spanish")).toBeInTheDocument();
+    expect(screen.getByLabelText("Japanese")).toBeInTheDocument();
 
     const flags = screen.getAllByRole("img");
     expect(flags).toHaveLength(3);
@@ -52,13 +52,13 @@ describe("TranslateForm component", () => {
 
   it("shows correct language selected by default", () => {
     render(<TranslateForm {...mockProps} />);
-    const frenchOption = screen.getByLabelText("French flag");
+    const frenchOption = screen.getByLabelText("French");
     expect(frenchOption).toBeChecked();
   });
 
   it("calls onLangChange when language selection changes", () => {
     render(<TranslateForm {...mockProps} />);
-    const spanishOption = screen.getByLabelText("Spanish flag");
+    const spanishOption = screen.getByLabelText("Spanish");
     fireEvent.click(spanishOption);
     expect(mockProps.onLangChange).toHaveBeenCalledWith("es");
   });
@@ -78,9 +78,9 @@ describe("TranslateForm component", () => {
 
   it("updates selected language when lang prop changes", () => {
     const { rerender } = render(<TranslateForm {...mockProps} />);
-    expect(screen.getByLabelText("French flag")).toBeChecked();
+    expect(screen.getByLabelText("French")).toBeChecked();
 
     rerender(<TranslateForm {...mockProps} lang="es" />);
-    expect(screen.getByLabelText("Spanish flag")).toBeChecked();
+    expect(screen.getByLabelText("Spanish")).toBeChecked();
   });
 });

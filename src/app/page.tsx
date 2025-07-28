@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Header from "./components/Header";
 import TranslateForm from "./components/TranslateForm";
@@ -12,15 +11,48 @@ export default function Home() {
   const [original, setOriginal] = useState("");
   const [translation, setTranslation] = useState("");
   const [lang, setLang] = useState<"fr" | "es" | "jp">("fr");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleTranslate = async () => {
-    console.log(`Text to translate: ${original}`);
-    console.log(`Lanugage: ${lang}`);
+    if (!original.trim()) {
+      setError("Please enter some text to translate");
+      return;
+    }
 
-    // → call your translation API here
-    // const result = await fetch('/api/translate', {/*…*/})
-    // setTranslation(result.text);
-    setView("results");
+    setIsLoading(true);
+    setError("");
+
+    try {
+      console.log(`Text to translate: ${original}`);
+      console.log(`Language: ${lang}`);
+
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: original,
+          targetLanguage: lang,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.error || "Translation failed");
+      }
+
+      const result = await response.json();
+      setTranslation(result.translation);
+      setView("results");
+    } catch (err) {
+      console.error("Translation error:", err);
+      setError(err instanceof Error ? err.message : "Translation failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleReset = () => {
@@ -28,6 +60,7 @@ export default function Home() {
     setTranslation("");
     setLang("fr");
     setView("form");
+    setError("");
   };
 
   return (
@@ -40,6 +73,8 @@ export default function Home() {
           lang={lang}
           onLangChange={setLang}
           onTranslate={handleTranslate}
+          isLoading={isLoading}
+          error={error}
         />
       ) : (
         <ResultsView
