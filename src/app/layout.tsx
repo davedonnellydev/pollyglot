@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Big_Shoulders, Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
-const bigShoulders = Big_Shoulders({ weight: "900", subsets: ["latin"] });
-const poppins = Poppins({ weight: ["400", "600"], subsets: ["latin"] });
+const inter = Inter({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const poppins = Poppins({
+  weight: ["400", "600"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bigShoulders.className} ${poppins.className}`}>
+      <body className={`${inter.className} ${poppins.className}`}>
         {children}
       </body>
     </html>
