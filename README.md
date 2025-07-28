@@ -10,7 +10,7 @@ The application design was inspired by the [Figma design template](https://www.f
 
 ## ✨ Features
 
-- **Multi-language Translation**: Translate text between English and French, Spanish, or Japanese
+- **Multi-language Translation**: Translate text from English to French, Spanish, or Japanese
 - **AI-Powered**: Uses OpenAI's GPT-4.1 model for accurate translations
 - **Content Moderation**: Built-in content filtering to ensure appropriate translations
 - **Rate Limiting**: Server-side rate limiting to prevent API abuse and ensure fair usage
