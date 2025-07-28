@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import TranslateForm from "./components/TranslateForm";
 import ResultsView from "./components/ResultsView";
+import { RateLimiter } from "../utils/rateLimiter";
 
 type View = "form" | "results";
 
@@ -13,10 +14,23 @@ export default function Home() {
   const [lang, setLang] = useState<"fr" | "es" | "jp">("fr");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [remainingRequests, setRemainingRequests] = useState(10);
+
+  // Update remaining requests on component mount and after translations
+  useEffect(() => {
+    setRemainingRequests(RateLimiter.getRemainingRequests());
+  }, []);
 
   const handleTranslate = async () => {
     if (!original.trim()) {
       setError("Please enter some text to translate");
+      return;
+    }
+
+    // Check rate limit before proceeding
+    if (!RateLimiter.checkLimit()) {
+      setError("Rate limit exceeded. Please try again later.");
+      setRemainingRequests(RateLimiter.getRemainingRequests());
       return;
     }
 
@@ -47,6 +61,9 @@ export default function Home() {
       const result = await response.json();
       setTranslation(result.translation);
       setView("results");
+
+      // Update remaining requests after successful translation
+      setRemainingRequests(RateLimiter.getRemainingRequests());
     } catch (err) {
       console.error("Translation error:", err);
       setError(err instanceof Error ? err.message : "Translation failed");
@@ -75,6 +92,7 @@ export default function Home() {
           onTranslate={handleTranslate}
           isLoading={isLoading}
           error={error}
+          remainingRequests={remainingRequests}
         />
       ) : (
         <ResultsView

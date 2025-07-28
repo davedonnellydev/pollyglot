@@ -1,23 +1,49 @@
+// src/app/api/translate/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { InputValidator } from "@/utils/validation";
+import { ServerRateLimiter } from "@/utils/serverRateLimiter";
 
 export async function POST(request: NextRequest) {
   try {
+    // Get client IP
+    const ip =
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
+
+    // Server-side rate limiting
+    if (!ServerRateLimiter.checkLimit(ip)) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const { text, targetLanguage } = await request.json();
 
-    if (!text || !targetLanguage) {
+    // Enhanced validation
+    const textValidation = InputValidator.validateText(text);
+    if (!textValidation.isValid) {
       return NextResponse.json(
-        { error: "Text and target language are required" },
+        { error: textValidation.error },
         { status: 400 }
       );
     }
 
-    // Get API key from environment variables
-    const apiKey = process.env.OPENAI_API_KEY;
-
-    if (!apiKey) {
+    if (!InputValidator.validateLanguage(targetLanguage)) {
       return NextResponse.json(
-        { error: "Translation API key not configured" },
+        { error: "Invalid target language" },
+        { status: 400 }
+      );
+    }
+
+    // Environment validation
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      console.error("OpenAI API key not configured");
+      return NextResponse.json(
+        { error: "Translation service temporarily unavailable" },
         { status: 500 }
       );
     }
@@ -27,11 +53,10 @@ export async function POST(request: NextRequest) {
       dangerouslyAllowBrowser: true,
     });
 
+    // Enhanced content moderation
     const moderatedText = await client.moderations.create({
       input: text,
     });
-
-    console.log(moderatedText);
 
     const { flagged, categories } = moderatedText.results[0];
 
@@ -40,15 +65,17 @@ export async function POST(request: NextRequest) {
       const flaggedCategories = keys.filter(
         (key: string) => categories[key as keyof typeof categories]
       );
-      throw new Error(
-        `Your input has been flagged for the following reasons: ${flaggedCategories.join(
-          ", "
-        )}`
+      return NextResponse.json(
+        {
+          error: `Content flagged as inappropriate: ${flaggedCategories.join(
+            ", "
+          )}`,
+        },
+        { status: 400 }
       );
     }
 
-    // Example API call - replace with your actual translation service
-    // This is a mock implementation - you'll need to replace with your chosen API
+    // Translation with enhanced error handling
     const response = await client.responses.create({
       model: "gpt-4.1",
       instructions:
@@ -59,16 +86,20 @@ export async function POST(request: NextRequest) {
       ###`,
     });
 
-    console.log(response);
-
     if (response.status !== "completed") {
       throw new Error(`Translation API error: ${response.status}`);
     }
+
+    // Log successful translation (for monitoring)
+    console.log(
+      `Translation completed for IP: ${ip}, Language: ${targetLanguage}, Length: ${text.length}`
+    );
 
     return NextResponse.json({
       translation: response.output_text || "Translation completed",
       original: text,
       targetLanguage,
+      remainingRequests: ServerRateLimiter.getRemaining(ip),
     });
   } catch (error) {
     console.error("Server Translation error:", error);

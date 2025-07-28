@@ -11,6 +11,7 @@ interface Props {
   onTranslate: () => void;
   isLoading?: boolean;
   error?: string;
+  remainingRequests: number;
 }
 
 export default function TranslateForm({
@@ -21,6 +22,7 @@ export default function TranslateForm({
   onTranslate,
   isLoading = false,
   error = "",
+  remainingRequests,
 }: Props): JSX.Element {
   return (
     <div data-testid="translate-form" className={styles.card}>
@@ -65,6 +67,13 @@ export default function TranslateForm({
       <Button onClick={onTranslate} disabled={isLoading}>
         {isLoading ? "Translating..." : "Translate"}
       </Button>
+      <div className={styles.usageInfo}>
+        <p>
+          This app is for educational purposes only. There is a limit to how
+          many requests each user can make per 15min block. Remaining requests:{" "}
+          {remainingRequests}
+        </p>
+      </div>
     </div>
   );
 }

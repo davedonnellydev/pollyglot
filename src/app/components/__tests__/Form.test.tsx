@@ -10,6 +10,7 @@ describe("TranslateForm component", () => {
     lang: "fr" as const,
     onLangChange: jest.fn(),
     onTranslate: jest.fn(),
+    remainingRequests: 10,
   };
 
   beforeEach(() => {
@@ -82,5 +83,22 @@ describe("TranslateForm component", () => {
 
     rerender(<TranslateForm {...mockProps} lang="es" />);
     expect(screen.getByLabelText("Spanish")).toBeChecked();
+  });
+
+  it("handles long text content", () => {
+    const longText = "a".repeat(1000);
+    render(
+      <TranslateForm {...mockProps} original={longText} remainingRequests={5} />
+    );
+
+    expect(screen.getByDisplayValue(longText)).toBeInTheDocument();
+  });
+
+  it("displays remaining requests correctly", () => {
+    render(
+      <TranslateForm {...mockProps} original="Hello" remainingRequests={7} />
+    );
+
+    expect(screen.getByText("Remaining requests: 7")).toBeInTheDocument();
   });
 });
