@@ -99,6 +99,10 @@ describe("TranslateForm component", () => {
       <TranslateForm {...mockProps} original="Hello" remainingRequests={7} />
     );
 
-    expect(screen.getByText("Remaining requests: 7")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "This app is for educational purposes only. There is a limit to how many requests each user can make. Remaining requests: 7"
+      )
+    ).toBeInTheDocument();
   });
 });
