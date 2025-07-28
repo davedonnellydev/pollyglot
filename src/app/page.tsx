@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Header from "./components/Header";
+import MainHeader from "./components/Header";
 import TranslateForm from "./components/TranslateForm";
 import ResultsView from "./components/ResultsView";
 
@@ -65,7 +65,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       {view === "form" ? (
         <TranslateForm
           original={original}
