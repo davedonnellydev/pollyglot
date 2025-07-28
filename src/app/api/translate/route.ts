@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     const response = await client.responses.create({
       model: "gpt-4.1",
       instructions:
-        "You are fluent in English, Spanish, French and Japanese. You will be given a block of text to translate from English into either French, Spanish or Japanese. Translate the text as accurately as you can.",
+        "You are fluent in English, Spanish, French and Japanese. You will be given a block of text to translate from English into either French, Spanish or Japanese. If translating to Japanese, include a translation that is in both Japanese characters and in Romanji (Japanese using the English alphabet). For all translations, also provide a way of saying the translation phonetically. Translate the text as accurately as you can.",
       input: `Translate the text in between the ### characters into ${targetLanguage}:
       ###
       ${text}
