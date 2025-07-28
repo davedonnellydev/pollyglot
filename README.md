@@ -144,15 +144,6 @@ The application uses OpenAI's API for translations. See [API_SETUP.md](./API_SET
 - **Security**: API keys are kept secure on the server side
 - **Flexibility**: Easy to switch between different translation services
 
-## 🎨 Design
-
-The application features a clean, modern design with:
-
-- Responsive layout that works on desktop and mobile
-- Smooth transitions between form and results views
-- Loading states and error feedback
-- Language-specific flag icons
-- Intuitive user interface
 
 ## 🤝 Contributing
 
@@ -170,7 +161,7 @@ This project is created for educational purposes as part of the Scrimba "Intro t
 
 - [Scrimba](https://scrimba.com) for the excellent course content
 - [OpenAI](https://openai.com) for providing the AI translation capabilities
-- [Next.js](https://nextjs.org) team for the amazing React framework
+- [Cursor](https://cursor.com) used to troubleshoot the variety of issues that arose throughout the project!
 
 ---
 
