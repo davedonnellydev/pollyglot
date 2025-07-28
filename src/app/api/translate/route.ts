@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get API key from environment variables
-    const apiKey = process.env.TRANSLATION_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
