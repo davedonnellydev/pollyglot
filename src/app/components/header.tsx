@@ -1,7 +1,7 @@
 import styles from "./styles/Header.module.css";
 import { JSX } from "react";
 
-export default function MainHeader(): JSX.Element {
+export default function Header(): JSX.Element {
   return (
     <header className={styles.header}>
       <img

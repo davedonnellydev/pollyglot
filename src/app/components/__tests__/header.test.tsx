@@ -1,17 +1,17 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MainHeader from "../Header";
+import Header from "../Header";
 
 describe("Header component", () => {
   it("renders the header element", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const headerElement = screen.getByRole("banner");
     expect(headerElement).toBeInTheDocument();
   });
 
   it("renders the image with the correct alt text", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const imageElement = screen.getByAltText(
       "A brightly coloured cartoon parrot surrounded by stars"
     );
@@ -20,7 +20,7 @@ describe("Header component", () => {
   });
 
   it("renders the main title and subtitle", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const mainTitle = screen.getByRole("heading", {
       level: 1,
       name: "PollyGlot",
@@ -34,13 +34,13 @@ describe("Header component", () => {
   });
 
   it("renders header with correct styling", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const headerElement = screen.getByRole("banner");
     expect(headerElement).toHaveClass("header");
   });
 
   it("renders the logo image with correct styling", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const logo = screen.getByAltText(
       "A brightly coloured cartoon parrot surrounded by stars"
     );
@@ -48,13 +48,13 @@ describe("Header component", () => {
   });
 
   it("renders the title with correct styling", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const title = screen.getByRole("heading", { level: 1 });
     expect(title).toHaveClass("title");
   });
 
   it("renders the subtitle with correct styling", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const subtitle = screen.getByRole("heading", { level: 2 });
     expect(subtitle).toBeInTheDocument();
     // Note: The subtitle is actually a <p> element, not an h2
@@ -63,7 +63,7 @@ describe("Header component", () => {
   });
 
   it("has proper semantic structure", () => {
-    render(<MainHeader />);
+    render(<Header />);
     const header = screen.getByRole("banner");
     expect(header).toBeInTheDocument();
     expect(header.tagName).toBe("HEADER");
