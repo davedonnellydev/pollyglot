@@ -70,7 +70,7 @@ export default function TranslateForm({
       <div className={styles.usageInfo}>
         <p>
           This app is for educational purposes only. There is a limit to how
-          many requests each user can make per 15min block. Remaining requests:{" "}
+          many requests each user can make. Remaining requests:{" "}
           {remainingRequests}
         </p>
       </div>

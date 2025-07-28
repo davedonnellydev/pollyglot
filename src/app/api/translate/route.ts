@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
 
     const client = new OpenAI({
       apiKey: apiKey,
-      dangerouslyAllowBrowser: true,
     });
 
     // Enhanced content moderation
@@ -90,11 +89,6 @@ export async function POST(request: NextRequest) {
       throw new Error(`Translation API error: ${response.status}`);
     }
 
-    // Log successful translation (for monitoring)
-    console.log(
-      `Translation completed for IP: ${ip}, Language: ${targetLanguage}, Length: ${text.length}`
-    );
-
     return NextResponse.json({
       translation: response.output_text || "Translation completed",
       original: text,
@@ -102,7 +96,6 @@ export async function POST(request: NextRequest) {
       remainingRequests: ServerRateLimiter.getRemaining(ip),
     });
   } catch (error) {
-    console.error("Server Translation error:", error);
     const errorMessage =
       error instanceof Error ? error.message : "Translation failed";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
